@@ -24,6 +24,8 @@ public class Window extends Application {
     private Button answer2Button = new Button("Oslo");
     private Button nextQuestion = new Button("Neste spørsmål");
     public ArrayList<ImageView> lifes = new ArrayList<>();
+    Window2 window2 = new Window2();
+
 
     @Override
     public void start(Stage primaryStage) {
@@ -56,12 +58,8 @@ public class Window extends Application {
         HBox lifeHolder = new HBox();
         lifeHolder.setAlignment(Pos.CENTER);
 
-
-        lifes.add(new ImageView(heart));
-        lifes.add(new ImageView(heart));
-        lifes.add(new ImageView(heart));
-
         for(int i = 0; i < 3 ; i++){
+            lifes.add(new ImageView(heart));
             lifes.get(i).setFitHeight(65);
             lifes.get(i).setFitWidth(65);
             lifeHolder.getChildren().add(lifes.get(i));
@@ -89,13 +87,21 @@ public class Window extends Application {
                 //Sets output depending on what button user clicked on and makes it visible
                 descriptionTextBottom.setText("Dette svaret er riktig!");
                 descriptionTextBottom.setOpacity(1);
-                nextQuestion.setOpacity(1);
                 //Sets spacing
                 bottomBox.setSpacing(255);
                 border.setBottom(bottomBox);
                 //Disables buttons
                 answer1Button.setDisable(true);
                 answer2Button.setDisable(true);
+
+                nextQuestion.setOpacity(1);
+                nextQuestion.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        primaryStage.close();
+                        window2.start1(new Stage());
+                    }
+                });
             }
         });
 
@@ -107,13 +113,18 @@ public class Window extends Application {
                 border.setBottom(bottomBox);
                 bottomBox.setSpacing(278);
                 lifeHolder.getChildren().remove(0);
-                nextQuestion.setOpacity(1);
+
                 answer1Button.setDisable(true);
                 answer2Button.setDisable(true);
-                //Disables buttons when user is out of lifes
-                /*if(lifeHolder.getChildren().isEmpty()){
-                    descriptionTextBottom.setText("Du har ingen liv igjen");
-                } */
+
+                nextQuestion.setOpacity(1);
+                nextQuestion.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        primaryStage.close();
+                        window2.start1(new Stage());
+                    }
+                });
             }
         });
 
