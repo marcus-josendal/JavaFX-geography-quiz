@@ -9,5 +9,4 @@ public class Main{
       System.out.println("Velkommen til dette tekstbaserte Geografispillet!");
        Application.launch(Window.class);
    }
-
 }

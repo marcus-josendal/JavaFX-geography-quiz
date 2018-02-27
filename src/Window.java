@@ -99,7 +99,7 @@ public class Window extends Application {
                     @Override
                     public void handle(ActionEvent event) {
                         primaryStage.close();
-                        window2.start1(new Stage());
+                        window2.start(new Stage());
                     }
                 });
             }
@@ -122,7 +122,7 @@ public class Window extends Application {
                     @Override
                     public void handle(ActionEvent event) {
                         primaryStage.close();
-                        window2.start1(new Stage());
+                        window2.start(new Stage());
                     }
                 });
             }
