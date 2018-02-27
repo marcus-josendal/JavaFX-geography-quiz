@@ -6,7 +6,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBoxBuilder;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -18,13 +17,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import java.util.ArrayList;
 
+
 public class Window extends Application {
-    //Makes buttons accesible from everywhere
-    private Button answer1Button = new Button("Madrid");
-    private Button answer2Button = new Button("Oslo");
     private Button nextQuestion = new Button("Neste spørsmål");
-    public ArrayList<ImageView> lifes = new ArrayList<>();
-    Window2 window2 = new Window2();
+    private ArrayList<ImageView> lifes = new ArrayList<>();
+    private Builder builder = new Builder();
 
 
     @Override
@@ -65,8 +62,12 @@ public class Window extends Application {
             lifeHolder.getChildren().add(lifes.get(i));
         }
 
+        ArrayList<Button> buttonArray = builder.returnButtons(2, 100, 20);
+        buttonArray.get(0).setText("Madrid");
+        buttonArray.get(1).setText("Oslo");
+        HBox hbox = builder.returnHBox(buttonArray, Pos.CENTER, 30, 15);
+        hbox.setPadding(new Insets(15 ,12 ,15 ,12));
 
-        HBox hbox = addHBox();
         hbox.setAlignment(Pos.CENTER);
         VBox mainVbox = new VBox();
         mainVbox.getChildren().add(hbox);
@@ -81,7 +82,7 @@ public class Window extends Application {
 
 
         //Add Eventhandlers for buttons
-        answer1Button.setOnAction(new EventHandler<ActionEvent>() {
+        buttonArray.get(0).setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 //Sets output depending on what button user clicked on and makes it visible
@@ -91,21 +92,21 @@ public class Window extends Application {
                 bottomBox.setSpacing(255);
                 border.setBottom(bottomBox);
                 //Disables buttons
-                answer1Button.setDisable(true);
-                answer2Button.setDisable(true);
+                buttonArray.get(0).setDisable(true);
+                buttonArray.get(1).setDisable(true);
 
                 nextQuestion.setOpacity(1);
                 nextQuestion.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
                         primaryStage.close();
-                        window2.start(new Stage());
+                        builder.start(new Stage());
                     }
                 });
             }
         });
 
-        answer2Button.setOnAction(new EventHandler<ActionEvent>() {
+        buttonArray.get(1).setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 descriptionTextBottom.setText("Dette svaret er feil!");
@@ -114,15 +115,15 @@ public class Window extends Application {
                 bottomBox.setSpacing(278);
                 lifeHolder.getChildren().remove(0);
 
-                answer1Button.setDisable(true);
-                answer2Button.setDisable(true);
+                buttonArray.get(0).setDisable(true);
+                buttonArray.get(1).setDisable(true);
 
                 nextQuestion.setOpacity(1);
                 nextQuestion.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
                         primaryStage.close();
-                        window2.start(new Stage());
+                        builder.start(new Stage());
                     }
                 });
             }
@@ -132,23 +133,6 @@ public class Window extends Application {
         primaryStage.setScene(new Scene(border, 600, 300));
         primaryStage.setResizable(false);
         primaryStage.show();
-    }
-    //Returns HBox with specifies amount of buttons
-    private HBox addHBox(){
-        HBox hbox = new HBox();
-        hbox.setPadding(new Insets(15 ,12 ,15 ,12));
-        hbox.setSpacing(30);
-        hbox.setAlignment(Pos.CENTER);
-
-        //First Button
-        answer1Button.setPrefSize(100,20);
-
-        //Second button
-        answer2Button.setPrefSize(100, 20);
-
-        //Adds buttons to HBox and returns HBox
-        hbox.getChildren().addAll(answer1Button, answer2Button);
-        return hbox;
     }
 
     //Returns text
