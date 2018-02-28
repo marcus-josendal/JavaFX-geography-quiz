@@ -16,12 +16,14 @@ import javafx.scene.text.Text;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import java.util.ArrayList;
+import java.util.stream.IntStream;
 
 
 public class Window extends Application {
     private Button nextQuestion = new Button("Neste spørsmål");
     private ArrayList<ImageView> lifes = new ArrayList<>();
     private Builder builder = new Builder();
+    private Window2 window_2 = new Window2();
 
 
     @Override
@@ -32,7 +34,7 @@ public class Window extends Application {
         VBox alignTextBox = new VBox();
 
         //Creates text and aligning text witing VBox
-        Text descriptionText = returnText("Hva er hovedstaden i Spania?", "Arial", 35, Color.WHITE, TextAlignment.CENTER);
+        Text descriptionText = returnText("Hva er hovedstaden i Thailand?", "Arial", 35, Color.WHITE, TextAlignment.CENTER);
         alignTextBox.getChildren().addAll(descriptionText);
         alignTextBox.setAlignment(Pos.CENTER);
 
@@ -62,9 +64,10 @@ public class Window extends Application {
             lifeHolder.getChildren().add(lifes.get(i));
         }
 
-        ArrayList<Button> buttonArray = builder.returnButtons(2, 100, 20);
-        buttonArray.get(0).setText("Madrid");
-        buttonArray.get(1).setText("Oslo");
+        ArrayList<Button> buttonArray = builder.returnButtons(3, 100, 20);
+        buttonArray.get(0).setText("Bankok");
+        buttonArray.get(1).setText("Seoul");
+        buttonArray.get(2).setText("Tokyo");
         HBox hbox = builder.returnHBox(buttonArray, Pos.CENTER, 30, 15);
         hbox.setPadding(new Insets(15 ,12 ,15 ,12));
 
@@ -92,15 +95,14 @@ public class Window extends Application {
                 bottomBox.setSpacing(255);
                 border.setBottom(bottomBox);
                 //Disables buttons
-                buttonArray.get(0).setDisable(true);
-                buttonArray.get(1).setDisable(true);
+                IntStream.range(0, buttonArray.size()).forEach(i -> buttonArray.get(i).setDisable(true));
 
                 nextQuestion.setOpacity(1);
                 nextQuestion.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
                         primaryStage.close();
-                        builder.start(new Stage());
+                        window_2.start(new Stage());
                     }
                 });
             }
@@ -115,15 +117,36 @@ public class Window extends Application {
                 bottomBox.setSpacing(278);
                 lifeHolder.getChildren().remove(0);
 
-                buttonArray.get(0).setDisable(true);
-                buttonArray.get(1).setDisable(true);
+                IntStream.range(0, buttonArray.size()).forEach(i -> buttonArray.get(i).setDisable(true));
 
                 nextQuestion.setOpacity(1);
                 nextQuestion.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
                         primaryStage.close();
-                        builder.start(new Stage());
+                        window_2.start(new Stage());
+                    }
+                });
+            }
+        });
+
+        buttonArray.get(2).setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                descriptionTextBottom.setText("Dette svaret er feil!");
+                descriptionTextBottom.setOpacity(1);
+                border.setBottom(bottomBox);
+                bottomBox.setSpacing(278);
+                lifeHolder.getChildren().remove(0);
+
+                IntStream.range(0, buttonArray.size()).forEach(i -> buttonArray.get(i).setDisable(true));
+
+                nextQuestion.setOpacity(1);
+                nextQuestion.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        primaryStage.close();
+                        window_2.start(new Stage());
                     }
                 });
             }

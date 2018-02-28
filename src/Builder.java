@@ -10,23 +10,10 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
-public class Builder extends Application {
+public class Builder {
     public Builder() {
 
     }
-
-    public void start(Stage secondStage) {
-        ArrayList<Button> buttonArray = returnButtons(3, 100, 20);
-        HBox buttonHolder = returnHBox(buttonArray, Pos.CENTER, 30, 15);
-
-        BorderPane example = new BorderPane();
-        example.setCenter(buttonHolder);
-        example.setStyle("-fx-background-color: #336699;");
-
-        secondStage.setScene(new Scene(example, 500, 500));
-        secondStage.show();
-    }
-
 
     //Return
     HBox returnHBox(ArrayList<Button> buttonArray, Pos position, double setSpacing, int padding){
