@@ -1,12 +1,11 @@
-import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 
 import java.util.ArrayList;
 
@@ -15,8 +14,8 @@ public class Builder {
 
     }
 
-    //Return
-    HBox returnHBox(ArrayList<Button> buttonArray, Pos position, double setSpacing, int padding){
+    //Return Hbox with buttons specified in the returnButtons method
+    public HBox returnHBox(ArrayList<Button> buttonArray, Pos position, double setSpacing, int padding){
         HBox hbox = new HBox();
 
         for(Button aButtonArray : buttonArray) {
@@ -29,7 +28,8 @@ public class Builder {
         return hbox;
     }
 
-    ArrayList<Button> returnButtons(int numberOfButtons, int buttonWidth, int buttonHeight) {
+    //Returns an ArrayList with button, which can be used by other Methods
+    public ArrayList<Button> returnButtons(int numberOfButtons, int buttonWidth, int buttonHeight) {
         ArrayList<Button> buttonArray = new ArrayList<>();
 
         for (int i = 0; i < numberOfButtons; i++) {
@@ -39,6 +39,18 @@ public class Builder {
         }
         return buttonArray;
     }
+
+    //Return text
+    public Text returnText(String content, String font, int fontsize, Color color, TextAlignment textposition){
+        Text text = new Text(content);
+        text.setFont(new Font(font, fontsize));
+        text.setFill(color);
+        text.setTextAlignment(textposition);
+
+        return text;
+    }
 }
+
+
 
 

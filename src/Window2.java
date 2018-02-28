@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 
 public class Window2 extends Application {
-    Builder builder = new Builder();
+    private Builder builder = new Builder();
 
     public Window2(){
 

@@ -1,5 +1,6 @@
 import javafx.application.Application;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -34,7 +35,7 @@ public class Window extends Application {
         VBox alignTextBox = new VBox();
 
         //Creates text and aligning text witing VBox
-        Text descriptionText = returnText("Hva er hovedstaden i Thailand?", "Arial", 35, Color.WHITE, TextAlignment.CENTER);
+        Text descriptionText = builder.returnText("Hva er hovedstaden i Thailand?", "Arial", 35, Color.WHITE, TextAlignment.CENTER);
         alignTextBox.getChildren().addAll(descriptionText);
         alignTextBox.setAlignment(Pos.CENTER);
 
@@ -42,7 +43,7 @@ public class Window extends Application {
         HBox alignTextBoxBottom = new HBox();
 
         //Creates Text and aligning text writing box
-        Text descriptionTextBottom = returnText("", "Arial", 25, Color.WHITE, TextAlignment.CENTER);
+        Text descriptionTextBottom = builder.returnText("", "Arial", 25, Color.WHITE, TextAlignment.CENTER);
         descriptionTextBottom.setOpacity(1);
         nextQuestion.setOpacity(0);
         alignTextBoxBottom.getChildren().add(nextQuestion);
@@ -64,6 +65,7 @@ public class Window extends Application {
             lifeHolder.getChildren().add(lifes.get(i));
         }
 
+        //Adds answer-options to the questions
         ArrayList<Button> buttonArray = builder.returnButtons(3, 100, 20);
         buttonArray.get(0).setText("Bankok");
         buttonArray.get(1).setText("Seoul");
@@ -71,12 +73,13 @@ public class Window extends Application {
         HBox hbox = builder.returnHBox(buttonArray, Pos.CENTER, 30, 15);
         hbox.setPadding(new Insets(15 ,12 ,15 ,12));
 
-        hbox.setAlignment(Pos.CENTER);
+        //Vbox with answer-options and player health
         VBox mainVbox = new VBox();
         mainVbox.getChildren().add(hbox);
         mainVbox.getChildren().add(lifeHolder);
         mainVbox.setAlignment(Pos.CENTER);
 
+        //Sets the different elements in the borderpane
         BorderPane border = new BorderPane();
         border.setStyle("-fx-background-color: #336699;");
         border.setCenter(mainVbox);
@@ -85,87 +88,46 @@ public class Window extends Application {
 
 
         //Add Eventhandlers for buttons
-        buttonArray.get(0).setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                //Sets output depending on what button user clicked on and makes it visible
-                descriptionTextBottom.setText("Dette svaret er riktig!");
-                descriptionTextBottom.setOpacity(1);
-                //Sets spacing
-                bottomBox.setSpacing(255);
-                border.setBottom(bottomBox);
-                //Disables buttons
-                IntStream.range(0, buttonArray.size()).forEach(i -> buttonArray.get(i).setDisable(true));
+        buttonArray.get(0).setOnAction(event -> {
+            //Sets output depending on what button user clicked on and makes it visible
+            descriptionTextBottom.setText("Dette svaret er riktig!");
+            descriptionTextBottom.setOpacity(1);
+            //Sets spacing
+            bottomBox.setSpacing(255);
+            border.setBottom(bottomBox);
+            //Disables buttons
+            IntStream.range(0, buttonArray.size()).forEach(i -> buttonArray.get(i).setDisable(true));
 
-                nextQuestion.setOpacity(1);
-                nextQuestion.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        primaryStage.close();
-                        window_2.start(new Stage());
-                    }
-                });
-            }
+            nextQuestion.setOpacity(1);
+            nextQuestion.setOnAction(event12 -> {
+                primaryStage.close();
+                window_2.start(new Stage());
+            });
         });
 
-        buttonArray.get(1).setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                descriptionTextBottom.setText("Dette svaret er feil!");
-                descriptionTextBottom.setOpacity(1);
-                border.setBottom(bottomBox);
-                bottomBox.setSpacing(278);
-                lifeHolder.getChildren().remove(0);
+        EventHandler ev = event -> {
+            descriptionTextBottom.setText("Dette svaret er feil!");
+            descriptionTextBottom.setOpacity(1);
+            border.setBottom(bottomBox);
+            bottomBox.setSpacing(278);
+            lifeHolder.getChildren().remove(0);
 
-                IntStream.range(0, buttonArray.size()).forEach(i -> buttonArray.get(i).setDisable(true));
+            IntStream.range(0, buttonArray.size()).forEach(i -> buttonArray.get(i).setDisable(true));
 
-                nextQuestion.setOpacity(1);
-                nextQuestion.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        primaryStage.close();
-                        window_2.start(new Stage());
-                    }
-                });
-            }
-        });
+            nextQuestion.setOpacity(1);
+            nextQuestion.setOnAction(event1 -> {
+                primaryStage.close();
+                window_2.start(new Stage());
+            });
+        };
 
-        buttonArray.get(2).setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                descriptionTextBottom.setText("Dette svaret er feil!");
-                descriptionTextBottom.setOpacity(1);
-                border.setBottom(bottomBox);
-                bottomBox.setSpacing(278);
-                lifeHolder.getChildren().remove(0);
-
-                IntStream.range(0, buttonArray.size()).forEach(i -> buttonArray.get(i).setDisable(true));
-
-                nextQuestion.setOpacity(1);
-                nextQuestion.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        primaryStage.close();
-                        window_2.start(new Stage());
-                    }
-                });
-            }
-        });
+        buttonArray.get(1).setOnAction(ev);
+        buttonArray.get(2).setOnAction(ev);
 
         //Show scene
         primaryStage.setScene(new Scene(border, 600, 300));
         primaryStage.setResizable(false);
         primaryStage.show();
-    }
-
-    //Returns text
-    private Text returnText(String content, String font, int fontsize, Color color, TextAlignment textposition){
-        Text descriptionText = new Text(content);
-        descriptionText.setFont(new Font(font, fontsize));
-        descriptionText.setFill(color);
-        descriptionText.setTextAlignment(textposition);
-
-        return descriptionText;
     }
 
     public ArrayList<ImageView> returnHealth(){
