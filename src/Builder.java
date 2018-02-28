@@ -40,6 +40,7 @@ public class Builder {
         return buttonArray;
     }
 
+
     //Return text
     public Text returnText(String content, String font, int fontsize, Color color, TextAlignment textposition){
         Text text = new Text(content);
@@ -48,6 +49,16 @@ public class Builder {
         text.setTextAlignment(textposition);
 
         return text;
+    }
+
+    public HBox returnQuestion(String questionText) {
+        HBox hbox = new HBox();
+        Text text = returnText(questionText, "Arial", 35, Color.WHITE, TextAlignment.CENTER);
+
+        hbox.getChildren().add(text);
+        hbox.setAlignment(Pos.CENTER);
+
+        return hbox;
     }
 }
 

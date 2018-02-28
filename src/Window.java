@@ -31,13 +31,8 @@ public class Window extends Application {
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Trykk på riktig svar!");
 
-        //Creates new VBox for aligning text
-        VBox alignTextBox = new VBox();
-
-        //Creates text and aligning text witing VBox
-        Text descriptionText = builder.returnText("Hva er hovedstaden i Thailand?", "Arial", 35, Color.WHITE, TextAlignment.CENTER);
-        alignTextBox.getChildren().addAll(descriptionText);
-        alignTextBox.setAlignment(Pos.CENTER);
+        //Question
+        HBox questionBox = builder.returnQuestion("Hvor mange fylker er det i Norge?");
 
         //Creates new VBoX for bottom text
         HBox alignTextBoxBottom = new HBox();
@@ -83,7 +78,7 @@ public class Window extends Application {
         BorderPane border = new BorderPane();
         border.setStyle("-fx-background-color: #336699;");
         border.setCenter(mainVbox);
-        border.setTop(alignTextBox);
+        border.setTop(questionBox);
         border.setBottom(bottomBox);
 
 
