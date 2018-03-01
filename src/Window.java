@@ -22,24 +22,21 @@ import java.util.stream.IntStream;
 
 public class Window extends Application {
     private Button nextQuestion = new Button("Neste spørsmål");
-    private ArrayList<ImageView> lifes = new ArrayList<>();
-    private Builder builder = new Builder();
     private Window2 window_2 = new Window2();
-
 
     @Override
     public void start(Stage primaryStage) {
+        new Builder();
         primaryStage.setTitle("Trykk på riktig svar!");
 
         //Question
-        HBox questionBox = builder.returnQuestion("Hvor mange fylker er det i Norge?");
+        HBox questionBox = Builder.instance.returnQuestion("Hva er hovedstaden i Thailand?");
 
         //Creates new VBoX for bottom text
         HBox alignTextBoxBottom = new HBox();
 
         //Creates Text and aligning text writing box
-        Text descriptionTextBottom = builder.returnText("", "Arial", 25, Color.WHITE, TextAlignment.CENTER);
-        descriptionTextBottom.setOpacity(1);
+        Text descriptionTextBottom = Builder.instance.returnText("", "Arial", 25, Color.WHITE, TextAlignment.CENTER);
         nextQuestion.setOpacity(0);
         alignTextBoxBottom.getChildren().add(nextQuestion);
 
@@ -49,24 +46,17 @@ public class Window extends Application {
         bottomBox.getChildren().add(nextQuestion);
 
         //Adds three hearts
-        Image heart = new Image("file:assets\\heart.png");
-        HBox lifeHolder = new HBox();
+        //Image heart = new Image("file:assets\\heart.png");
+        HBox lifeHolder = Builder.instance.returnLifeHolder();
         lifeHolder.setAlignment(Pos.CENTER);
 
-        for(int i = 0; i < 3 ; i++){
-            lifes.add(new ImageView(heart));
-            lifes.get(i).setFitHeight(65);
-            lifes.get(i).setFitWidth(65);
-            lifeHolder.getChildren().add(lifes.get(i));
-        }
-
         //Adds answer-options to the questions
-        ArrayList<Button> buttonArray = builder.returnButtons(3, 100, 20);
+        ArrayList<Button> buttonArray = Builder.instance.returnButtons(3, 100, 20);
         buttonArray.get(0).setText("Bankok");
         buttonArray.get(1).setText("Seoul");
         buttonArray.get(2).setText("Tokyo");
-        HBox hbox = builder.returnHBox(buttonArray, Pos.CENTER, 30, 15);
-        hbox.setPadding(new Insets(15 ,12 ,15 ,12));
+        HBox hbox = Builder.instance.returnHBox(buttonArray, Pos.CENTER, 30, 15);
+        hbox.setPadding(new Insets(15, 12, 15, 12));
 
         //Vbox with answer-options and player health
         VBox mainVbox = new VBox();
@@ -123,9 +113,5 @@ public class Window extends Application {
         primaryStage.setScene(new Scene(border, 600, 300));
         primaryStage.setResizable(false);
         primaryStage.show();
-    }
-
-    public ArrayList<ImageView> returnHealth(){
-        return lifes;
     }
 }

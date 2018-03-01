@@ -6,7 +6,7 @@ public class Main{
 
    }
    public static void main(String[] args){
-      System.out.println("Velkommen til dette tekstbaserte Geografispillet!");
+       System.out.println("Velkommen til dette tekstbaserte Geografispillet!");
        Application.launch(Window.class);
    }
 }

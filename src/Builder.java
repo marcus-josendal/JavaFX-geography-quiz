@@ -1,6 +1,8 @@
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -10,8 +12,31 @@ import javafx.scene.text.TextAlignment;
 import java.util.ArrayList;
 
 public class Builder {
-    public Builder() {
 
+    ArrayList<ImageView> lifes = new ArrayList<>();
+    HBox lifeHolder = new HBox();
+
+    public static Builder instance;
+
+    public Builder() {
+        if(instance != null){
+            return;
+        }
+        instance = this;
+        initLife();
+    }
+
+    private  void initLife(){
+
+        Image heart = new Image("file:assets\\heart.png");
+        lifeHolder.setAlignment(Pos.CENTER);
+
+        for(int i = 0; i < 3 ; i++){
+            lifes.add(new ImageView(heart));
+            lifes.get(i).setFitHeight(65);
+            lifes.get(i).setFitWidth(65);
+            lifeHolder.getChildren().add(lifes.get(i));
+        }
     }
 
     //Return Hbox with buttons specified in the returnButtons method
@@ -59,6 +84,12 @@ public class Builder {
         hbox.setAlignment(Pos.CENTER);
 
         return hbox;
+    }
+
+    public HBox returnLifeHolder(){
+
+
+        return lifeHolder;
     }
 }
 
