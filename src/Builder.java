@@ -1,8 +1,10 @@
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -76,6 +78,7 @@ public class Builder {
         return text;
     }
 
+    //Returns question text (only questions)
     public HBox returnQuestion(String questionText) {
         HBox hbox = new HBox();
         Text text = returnText(questionText, "Arial", 35, Color.WHITE, TextAlignment.CENTER);
@@ -85,12 +88,11 @@ public class Builder {
 
         return hbox;
     }
-
+    //Returns HBox with lifes in it
     public HBox returnLifeHolder(){
-
-
         return lifeHolder;
     }
+
 }
 
 
