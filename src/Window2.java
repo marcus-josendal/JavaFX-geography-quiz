@@ -14,6 +14,7 @@ import java.util.stream.IntStream;
 
 public class Window2 extends Application {
     private Button nextQuestion = new Button("Neste spørsmål");
+    private Window3 window_3 = new Window3();
 
     public Window2(){
 
@@ -66,7 +67,7 @@ public class Window2 extends Application {
                     descriptionTextBottom.setText("Dette svaret er riktig!");
                     descriptionTextBottom.setOpacity(1);
                     //Sets spacing
-                    bottomBox.setSpacing(245);
+                    bottomBox.setSpacing(256);
                     border.setBottom(bottomBox);
                     //Disables buttons
                     IntStream.range(0, buttonArray.size()).forEach(j -> buttonArray.get(j).setDisable(true));
@@ -74,7 +75,7 @@ public class Window2 extends Application {
                     nextQuestion.setOpacity(1);
                     nextQuestion.setOnAction(event12 -> {
                         secondStage.close();
-                        //window_2.start(new Stage());
+                        window_3.start(new Stage());
                     });
                 });
             }
@@ -84,21 +85,23 @@ public class Window2 extends Application {
                 descriptionTextBottom.setText("Dette svaret er feil!");
                 descriptionTextBottom.setOpacity(1);
                 //Sets spacing (Yes, yes i know harcoding)
-                bottomBox.setSpacing(265);
+                bottomBox.setSpacing(275);
                 border.setBottom(bottomBox);
                 //Disables buttons
                 IntStream.range(0, buttonArray.size()).forEach(j -> buttonArray.get(j).setDisable(true));
                 lifes.getChildren().remove(0);
 
+
                 nextQuestion.setOpacity(1);
                 nextQuestion.setOnAction(event12 -> {
                     secondStage.close();
-                    //window_2.start(new Stage());
+                    window_3.start(new Stage());
                 });
             });
         }
 
         secondStage.setScene(new Scene(border, 600, 300));
+        secondStage.setResizable(false);
         secondStage.show();
     }
 }
